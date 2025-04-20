@@ -1,0 +1,29 @@
+<!-- templates/events/gallery.html -->
+{% extends 'events/base.html' %}
+{% block content %}
+<h2>Gallery</h2>
+<form method="get">
+  <select name="category">
+    <option value="">All categories</option>
+    {% for c in categories %}
+      <option value="{{ c.name }}" {% if request.GET.category == c.name %}selected{% endif %}>{{ c.name }}</option>
+    {% endfor %}
+  </select>
+  <input type="date" name="date" value="{{ request.GET.date }}">
+  <button type="submit">Filter</button>
+</form>
+
+<ul>
+  {% for m in media_list %}
+    <li>
+      {% if m.media_type == 'image' %}
+        <img src="{{ m.file.url }}" width="200">
+      {% else %}
+        <video width="320" controls><source src="{{ m.file.url }}"></video>
+      {% endif %}
+      <p>{{ m.description }}</p>
+      <p><small>{{ m.upload_date }}</small></p>
+    </li>
+  {% empty %}<li>No media found.</li>{% endfor %}
+</ul>
+{% endblock %}

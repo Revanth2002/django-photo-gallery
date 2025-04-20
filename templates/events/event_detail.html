@@ -1,0 +1,26 @@
+<!-- templates/events/event_detail.html -->
+{% extends 'events/base.html' %}
+{% block title %}{{ event.title }}{% endblock %}
+{% block content %}
+<h2>{{ event.title }}</h2>
+<p>{{ event.description }}</p>
+<p><strong>Date:</strong> {{ event.date }}</p>
+
+<h3>Media</h3>
+{% if media %}
+  <ul>
+    {% for m in media %}
+      <li>
+        {% if m.media_type == 'image' %}
+          <img src="{{ m.file.url }}" alt="" width="200">
+        {% else %}
+          <video width="320" controls><source src="{{ m.file.url }}"></video>
+        {% endif %}
+        <p>{{ m.description }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No media yet.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+<!-- templates/events/pending_media.html -->
+{% extends 'events/base.html' %}
+{% block content %}
+<h2>Pending Media Approval</h2>
+<ul>
+  {% for m in pending_list %}
+    <li>
+      {% if m.media_type == 'image' %}<img src="{{ m.file.url }}" width="150">{% else %}<video width="200" controls><source src="{{ m.file.url }}"></video>{% endif %}
+      <p>{{ m.description }} (by {{ m.uploaded_by }})</p>
+      <a href="{% url 'approve_media' m.pk 'approve' %}">Approve</a> |
+      <a href="{% url 'approve_media' m.pk 'reject' %}">Reject</a>
+    </li>
+  {% empty %}<li>No pending uploads.</li>{% endfor %}
+</ul>
+{% endblock %}
