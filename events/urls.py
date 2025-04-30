@@ -16,4 +16,6 @@ urlpatterns = [
     path('media/pending/', views.pending_media_list, name='pending_media_list'),
     path('media/<int:pk>/<str:action>/', views.approve_media, name='approve_media'),
     path('gallery/', views.gallery, name='gallery'),
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
 ]

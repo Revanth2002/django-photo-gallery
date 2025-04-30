@@ -1,11 +1,35 @@
 <!-- templates/events/event_list.html -->
 {% extends 'events/base.html' %}
 {% block title %}All Events{% endblock %}
+{% load static %}
 {% block content %}
-<h2>All Events</h2>
-<ul>
-  {% for ev in events %}
-    <li><a href="{% url 'event_detail' ev.pk %}">{{ ev.title }}</a> ({{ ev.date }})</li>
-  {% empty %}<li>No events yet.</li>{% endfor %}
-</ul>
+
+
+<div class="row mb-4 tm-mt-60 text-center">
+  <h2 class="col-12 tm-text-primary">
+      Latest uploads by <span class="highlight">Students</span> and <span class="highlight">Faculties</span>
+  </h2>
+  <p class="col-12 lead">
+      Stay updated with our curated collection of events designed to inspire, educate, and entertain.
+  </p>
+</div>
+
+
+
+  <div class="row">
+    {% for event in events %}
+      <div class="col-md-3" onclick="window.location.href='{% url 'event_detail' event.pk %}'" style="cursor: pointer;">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ event.title }}</h5>
+            <p class="card-text">{{ event.description|truncatewords:10 }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-muted">{{ event.date }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
 {% endblock %}

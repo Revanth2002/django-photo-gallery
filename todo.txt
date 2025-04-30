@@ -1,0 +1,12 @@
+about.html
+base.html
+contact.html
+create_event.html 
+event_detail.html 
+event_list.html 
+gallery.html
+home.html 
+login.html
+pending_media.html
+register.html
+upload_media.html 

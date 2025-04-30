@@ -36,7 +36,6 @@ class Media(models.Model):
     )
     MEDIA_TYPE_CHOICES = (
         ('image','Image'),
-        ('video','Video'),
     )
     file         = models.FileField(upload_to='media/%Y/%m/%d/')
     media_type   = models.CharField(max_length=5, choices=MEDIA_TYPE_CHOICES)

@@ -1,14 +1,9 @@
-Step-1 : Inside photogallery directory, run 'virtualenv venv'
-step-2 : Run 'venv/Scripts/activate'
-Step-3 : python manage.py makemigrations events
-Step-4 : python manage.py migrate
-Step-5 : python manage.py createsuperuser
-        Then enter the details -> 
-            Username :   admin
-            Email : test@admin.com
-            Password 1234test
-Step-6 : python manage.py collectstatic
-Step-7 : python manage.py runserver
+step-1 : Run 'venv/Scripts/activate'
+Step-2 : python manage.py runserver
 
 To access main admin,
     - http://localhost:8000/admin [Use the createsuperuser credentails]
+    - superadmin credentails
+        Username :   admin
+        Email : test@admin.com
+        Password 1234test

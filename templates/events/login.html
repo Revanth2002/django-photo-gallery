@@ -1,9 +1,57 @@
 <!-- templates/events/login.html -->
 {% extends 'events/base.html' %}
 {% block content %}
-<h2>Login</h2>
-<form method="post">{% csrf_token %}
+
+<!-- <form method="post">{% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Login</button>
-</form>
+</form> -->
+
+
+
+<br />
+
+<section class="h-100">
+  <div class="container h-100">
+    <div class="row justify-content-sm-center h-100">
+      <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+        <div class="card shadow-lg">
+          <div class="card-body p-5">
+            <h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
+
+
+            <form method="post">
+              {% csrf_token %}
+              {% for field in form %}
+              <div class="form-group">
+                <label class="mb-2 text-muted" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <!-- {{ field }} -->
+                <input id="{{ field.id_for_label }}" type="{{ field.field.widget.input_type }}" class="form-control"
+                  name="{{ field.name }}" required autofocus>
+                {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+              {% endfor %}
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+
+          </div>
+          <div class="card-footer py-3 border-0">
+            <div class="text-center">
+              Don't have an account? <a href="{% url 'register' %}" class="text-dark">Create One</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<br />
+<br />
+
 {% endblock %}

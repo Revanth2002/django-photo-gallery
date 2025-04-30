@@ -1,26 +1,42 @@
 <!-- templates/events/event_detail.html -->
 {% extends 'events/base.html' %}
+{% load static %}
 {% block title %}{{ event.title }}{% endblock %}
 {% block content %}
-<h2>{{ event.title }}</h2>
-<p>{{ event.description }}</p>
-<p><strong>Date:</strong> {{ event.date }}</p>
 
-<h3>Media</h3>
-{% if media %}
-  <ul>
-    {% for m in media %}
-      <li>
-        {% if m.media_type == 'image' %}
-          <img src="{{ m.file.url }}" alt="" width="200">
-        {% else %}
-          <video width="320" controls><source src="{{ m.file.url }}"></video>
-        {% endif %}
-        <p>{{ m.description }}</p>
-      </li>
-    {% endfor %}
-  </ul>
-{% else %}
-  <p>No media yet.</p>
-{% endif %}
+<div class="event-gallery-container text-center py-5">
+  <h1 class="tm-text-primary mb-4">{{ event.title }}</h1>
+  <p class="lead mb-5">{{ event.description }}</p>
+
+  <div class="event-details mb-5">
+    <h3 class="text-secondary">Event Details</h3>
+    <p><strong>Date:</strong> {{ event.date }}</p>
+    <p><strong>Event By:</strong> {{ event.created_by }}</p>
+    <p><strong>Uploaded On:</strong> {{ event.created_at }}</p>
+  </div>
+
+  <div class="media-gallery">
+    <h3 class="text-secondary mb-4">Event Gallery</h3>
+    {% if media %}
+      <div class="row">
+        {% for m in media %}
+          <div class="col-md-4 mb-4">
+            <div class="media-item">
+              {% if m.media_type == 'image' %}
+                <img src="{{ m.file.url }}" alt="" class="img-fluid rounded shadow-sm">
+              {% else %}
+                <video class="w-100 rounded shadow-sm" controls>
+                  <source src="{{ m.file.url }}">
+                </video>
+              {% endif %}
+              <p class="mt-2">{{ m.description }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted">No media available for this event.</p>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}

@@ -1,29 +1,62 @@
 <!-- templates/events/gallery.html -->
 {% extends 'events/base.html' %}
 {% block content %}
-<h2>Gallery</h2>
-<form method="get">
-  <select name="category">
-    <option value="">All categories</option>
-    {% for c in categories %}
-      <option value="{{ c.name }}" {% if request.GET.category == c.name %}selected{% endif %}>{{ c.name }}</option>
-    {% endfor %}
-  </select>
-  <input type="date" name="date" value="{{ request.GET.date }}">
-  <button type="submit">Filter</button>
+
+
+<div class="row mb-4 tm-mt-60 text-center">
+  <h2 class="col-12 tm-text-primary">
+      Latest uploads by <span class="highlight">Students</span> and <span class="highlight">Faculties</span>
+  </h2>
+  <p class="col-12 lead">
+      Stay updated with our curated collection of events designed to inspire, educate, and entertain.
+  </p>
+</div>
+
+<form method="get" class="filter-form mb-4 p-3 bg-light rounded ">
+  <div class="row align-items-center">
+    <div class="col-md-4 mb-2 mb-md-0">
+      <label for="category" class="form-label fw-bold">Category</label>
+        <select name="category" id="category" class="form-select form-select-md">
+        <option value="" ></option>
+        {% for c in categories %}
+          <option value="{{ c.name }}" {% if request.GET.category == c.name %}selected{% endif %}>{{ c.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4 mb-2 mb-md-0">
+      <label for="date" class="form-label fw-bold">Date</label>
+      <input type="date" name="date" id="date" class="form-control" value="{{ request.GET.date }}">
+    </div>
+    <div class="col-md-4 text-md-end">
+      <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+    </div>
+  </div>
 </form>
 
-<ul>
-  {% for m in media_list %}
-    <li>
-      {% if m.media_type == 'image' %}
-        <img src="{{ m.file.url }}" width="200">
-      {% else %}
-        <video width="320" controls><source src="{{ m.file.url }}"></video>
-      {% endif %}
-      <p>{{ m.description }}</p>
-      <p><small>{{ m.upload_date }}</small></p>
-    </li>
-  {% empty %}<li>No media found.</li>{% endfor %}
-</ul>
+
+<div class="container-fluid tm-container-content tm-mt-60">
+
+  <div class="row tm-mb-90 tm-gallery">
+
+    
+      {% for m in media_list %}
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+          <figure class="effect-ming tm-video-item">
+              <img src="{{ m.file.url }}" alt="Image" class="img-fluid">
+              <figcaption class="d-flex align-items-center justify-content-center">
+                  <h2>{{ m.event}}</h2>
+                  <a href="{% url 'event_detail' m.event.pk %}">View more</a>
+              </figcaption>                    
+          </figure>
+          <div class="d-flex justify-content-between tm-text-gray">
+              <span class="tm-text-gray-medium">{{ m.uploaded_by}}</span>
+              <span>{{ m.upload_date }}</span>
+          </div>
+          
+      </div>
+      {% endfor %}
+              
+  </div> <!-- row -->
+</div>
+
 {% endblock %}

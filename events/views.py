@@ -23,7 +23,11 @@ def register(request):
     return render(request,'events/register.html',{'form':form})
 
 def home(request):
-    return render(request,'events/home.html')
+    #fetch only last 6-8 events
+    events = Event.objects.order_by('-date')[:8]
+    #Fetch only last 6-8 media
+    media = Media.objects.filter(status='approved').order_by('-upload_date')[:8]
+    return render(request,'events/home.html',{'events':events,'media':media})
 
 @login_required
 @role_required(['faculty','student','faculty'])
@@ -71,10 +75,10 @@ def upload_media(request):
     return render(request,'events/upload_media.html',{'form':form})
 
 @login_required
-@role_required([])
 def approve_media(request, pk, action):
     # only admin
-    if not request.user.is_superuser:
+    print(request.user.profile.role)
+    if not (request.user.is_superuser or request.user.profile.role=='faculty'):
         return HttpResponseForbidden()
     m = get_object_or_404(Media, pk=pk, status='pending')
     if action=='approve':
@@ -86,10 +90,11 @@ def approve_media(request, pk, action):
 
 @login_required
 def pending_media_list(request):
-    if not request.user.is_superuser:
+    if (request.user.is_superuser or request.user.profile.role=='faculty'):
+        pending = Media.objects.filter(status='pending')
+        return render(request,'events/pending_media.html',{'pending_list':pending})
+    else:
         return HttpResponseForbidden()
-    pending = Media.objects.filter(status='pending')
-    return render(request,'events/pending_media.html',{'pending_list':pending})
 
 def gallery(request):
     qs = Media.objects.filter(status='approved')
@@ -108,3 +113,9 @@ def gallery(request):
 def custom_logout_view(request):
     logout(request)
     return redirect('login') 
+
+def about(request):
+    return render(request, 'events/about.html')
+
+def contact(request):
+    return render(request, 'events/contact.html')

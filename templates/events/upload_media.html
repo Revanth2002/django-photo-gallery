@@ -1,9 +1,52 @@
 <!-- templates/events/upload_media.html -->
 {% extends 'events/base.html' %}
 {% block content %}
-<h2>Upload Media</h2>
-<form method="post" enctype="multipart/form-data">{% csrf_token %}
+
+
+<div class="row mb-4 tm-mt-60 text-center">
+  <h2 class="col-12 tm-text-primary">
+      Upload <span class="highlight">Photos</span> for events
+  </h2>
+  <p class="col-12 lead">
+      Once uploaded, the photos will be sent for approval. After approval, they will be visible in the event gallery.
+  </p>
+</div>
+
+<!-- <form method="post" enctype="multipart/form-data">{% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Upload</button>
+</form> -->
+
+
+            
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% for field in form %}
+    <div class="form-group">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {% if field.field.widget.input_type == 'select' %}
+        <select id="{{ field.id_for_label }}" class="form-control" name="{{ field.html_name }}">
+          {% for choice in field.field.choices %}
+            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+          {% endfor %}
+        </select>
+      {% else %}
+        <input
+          id="{{ field.id_for_label }}"
+          type="{{ field.field.widget.input_type }}"
+          class="form-control"
+          name="{{ field.html_name }}"
+        >
+      {% endif %}
+      {% if field.help_text %}
+        <small class="form-text text-muted">{{ field.help_text }}</small>
+      {% endif %}
+      {% for error in field.errors %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary">Upload</button>
 </form>
+
 {% endblock %}

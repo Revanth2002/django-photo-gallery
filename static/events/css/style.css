@@ -3,3 +3,42 @@ body { font-family: sans-serif; margin:20px; }
 nav a { margin-right: 10px; }
 img, video { margin: 5px; border:1px solid #ccc; padding:3px; }
 form { margin: 10px 0; }
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .card-text {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .text-muted {
+    color: #999;
+  }
+  .highlight {
+    color: #007bff; /* or any other color that fits your brand */
+    font-weight: bold;
+  }
+  .highlight-1{
+    color: #ff5733; /* or any other color that fits your brand */
+    font-weight: bold;
+    /* create background color */
+    background-color: #ffffff;
+  }
+  .display-3{
+    color: #000000;
+    font-weight: bold;
+  }

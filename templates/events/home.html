@@ -1,7 +1,93 @@
 <!-- templates/events/home.html -->
 {% extends 'events/base.html' %}
+{% load static %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<h1>Welcome to University Event Management</h1>
-<p>This site allows Admins, Faculty, Students & Public to manage and browse event galleries.</p>
+<!-- <h1>Welcome to University Event Management</h1>
+<p>This site allows Admins, Faculty, Students & Public to manage and browse event galleries.</p> -->
+
+
+<body>
+
+    <div class="tm-hero d-flex justify-content-center align-items-center" 
+     style="height: 100vh; background-image: url('{% static 'events/img/clg_main.jpeg' %}'); background-size: cover; background-position: center; background-attachment: fixed;">
+    <div class="text-center">
+        <h1 class="display-3">Showcasing, <span class="highlight-1">College Gallery</span></h1>
+    </div>
+</div>
+
+        <!-- <form class="d-flex tm-search-form">
+            <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success tm-search-btn" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </form> -->
+    </div>
+
+
+    <div class="row mb-4 tm-mt-60 text-center">
+        <h2 class="col-12 tm-text-primary">
+            Explore the Latest <span class="highlight">Events</span> and <span class="highlight">Experiences</span>
+        </h2>
+        <p class="col-12 lead">
+            Stay updated with our curated collection of events designed to inspire, educate, and entertain.
+        </p>
+    </div>
+
+    <div class="row">
+        {% for event in events %}
+        <div class="col-md-3" onclick="window.location.href='{% url 'event_detail' event.pk %}'" style="cursor: pointer;">
+            <div class="card mb-4 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">{{ event.title }}</h5>
+                <p class="card-text">{{ event.description|truncatewords:10 }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">{{ event.date }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    <div class="row mb-4 tm-mt-60 text-center">
+        <h2 class="col-12 tm-text-primary">
+            Latest uploads by <span class="highlight">Students</span> and <span class="highlight">Faculties</span>
+        </h2>
+        <p class="col-12 lead">
+            Stay updated with our curated collection of events designed to inspire, educate, and entertain.
+        </p>
+    </div>
+
+
+    <div class="container-fluid tm-container-content tm-mt-60">
+
+        <div class="row tm-mb-90 tm-gallery">
+            {% for m in media %}
+        	<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                <figure class="effect-ming tm-video-item">
+                    <img src="{{ m.file.url }}" alt="Image" class="img-fluid">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>{{ m.event}}</h2>
+                        <a href="{% url 'event_detail' m.event.pk %}">View more</a>
+                    </figcaption>                    
+                </figure>
+                <div class="d-flex justify-content-between tm-text-gray">
+                    <span class="tm-text-gray-medium">{{ m.uploaded_by}}</span>
+                    <span>{{ m.upload_date }}</span>
+                </div>
+            
+            </div>
+            {% endfor %}
+                    
+        </div> <!-- row -->
+    </div> <!-- container-fluid, tm-container-content -->
+
+ 
+    
+
+</body>
+
+
 {% endblock %}
+
